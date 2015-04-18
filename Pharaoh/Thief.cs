@@ -103,6 +103,16 @@ public class Thief : Mappable
         }
     }
 
+    //my stuff
+    public Point position
+    {
+        get
+        {
+            validify();
+            return new Point(X,Y);
+        }
+    }
+
     /// <summary>
     /// The owner of this thief.
     /// </summary>

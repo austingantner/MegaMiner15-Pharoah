@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+using Pharaoh;
 
 /// <summary>
 /// The class implementing gameplay logic.
@@ -107,8 +108,7 @@ class AI : BaseAI
             int j = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
-                // If the tile is on my side and I haven't placed a sarcophagus on it
-                
+                // If the tile is on my side and I haven't placed a sarcophagus on it                
                 //Bryce changed first tiles to random tiles
                 //Random rnd = new Random();
                 //int tileNum = rnd.Next(tiles.Length);
@@ -228,131 +228,138 @@ class AI : BaseAI
                     me.purchaseThief(spawnTile.X, spawnTile.Y, thiefNo);
                 }
             }
-            // Move my thieves
-            foreach (var thief in myThieves)
-            {
-                // If the thief is alive and not frozen
-                if (thief.Alive == 1 && thief.FrozenTurnsLeft == 0)
-                {
-                    int[] xChange = new int[] { -1, 1, 0, 0 };
-                    int[] yChange = new int[] { 0, 0, -1, 1 };
-                    // Try to dig or use a bomb before moving
-                    if (thief.ThiefType == ThiefType.DIGGER && thief.SpecialsLeft > 0)
-                    {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            // If there is a wall adjacent and an empty space on the other side
-                            int checkX = thief.X + xChange[i];
-                            int checkY = thief.Y + yChange[i];
-                            Tile wallTile = getTile(checkX, checkY);
-                            Tile emptyTile = getTile(checkX + xChange[i], checkY + yChange[i]);
-                            // Must be on the map, and not trying to dig to the other side
-                            if (wallTile != null && emptyTile != null && !onMySide(checkX + xChange[i]))
-                            {
-                                // If there is a wall with an empty tile on the other side
-                                if (wallTile.Type == Tile.WALL && emptyTile.Type == Tile.EMPTY)
-                                {
-                                    // Dig through the wall
-                                    thief.useSpecial(checkX, checkY);
-                                    //break out of the loop
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else if (thief.ThiefType == ThiefType.BOMBER && thief.SpecialsLeft > 0)
-                    {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            // The place to check for things to blow up
-                            int checkX = thief.X + xChange[i];
-                            int checkY = thief.Y + yChange[i];
-                            // Make sure that the spot isn't on the other side
-                            if (!onMySide(checkX))
-                            {
-                                // If there is a wall tile there, blow it up
-                                Tile checkTile = getTile(checkX, checkY);
-                                if (checkTile != null && checkTile.Type == Tile.WALL)
-                                {
-                                    // Blow up the wall
-                                    thief.useSpecial(checkX, checkY);
-                                    // Break out of the loop
-                                    break;
-                                }
-                                // Otherwise check if there is a trap there
-                                Trap checkTrap = getTrap(checkX, checkY);
-                                // Don't want to blow up the sarcophagus!
-                                if (checkTrap != null && checkTrap.TrapType != TrapType.SARCOPHAGUS)
-                                {
-                                    // Blow up the trap
-                                    thief.useSpecial(checkX, checkY);
-                                    // Break out of the loop
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    // If the thief has any movement left
-                    if (thief.MovementLeft > 0)
-                    {
-                        // Find a path from the thief's location to the enemy sarcophagus
-                        Queue<Point> path = new Queue<Point>();
-                        int endX = enemySarcophagi[0].X;
-                        int endY = enemySarcophagi[0].Y;
-                        path = findPath(new Point(thief.X, thief.Y), new Point(endX, endY));
-                        // If a path exists then move forward on the path
-                        if (path.Count > 0)
-                        {
-                            Point nextMove = path.Dequeue();
-                            thief.move(nextMove.x, nextMove.y);
-                        }
-                    }
-                }
-            }
-            // Do things with traps now
-            List<Trap> myTraps = getMyTraps();
-            foreach (var trap in myTraps)
-            {
-                int[] xChange = new int[] { -1, 1, 0, 0 };
-                int[] yChange = new int[] { 0, 0, -1, 1 };
-                // Make sure trap can be used
-                if (trap.Active == 1)
-                {
-                    // If trap is a boulder
-                    if (trap.TrapType == TrapType.BOULDER)
-                    {
-                        // If there is an enemy thief adjancent
-                        for (int i = 0; i < 4; i++)
-                        {
-                            Thief enemyThief = getThief(trap.X + xChange[i], trap.Y + yChange[i]);
-                            // Roll over the thief
-                            if (enemyThief != null)
-                            {
-                                trap.act(enemyThief.X, enemyThief.Y);
-                                break;
-                            }
-                        }
-                    }
-                    else if (trap.TrapType == TrapType.MUMMY)
-                    {
-                        // Move around randomly if a mummy
-                        int dir = rand.Next(4);
-                        int checkX = trap.X + xChange[dir];
-                        int checkY = trap.Y + yChange[dir];
-                        Tile checkTile = getTile(checkX, checkY);
-                        Trap checkTrap = getTrap(checkX, checkY);
-                        // If the tile is empty, and there isn't a sarcophagus there
-                        if (checkTrap == null || checkTrap.TrapType != TrapType.SARCOPHAGUS)
-                        {
-                            if (checkTile != null && checkTile.Type == Tile.EMPTY)
-                            {
-                                //move on that tile
-                                trap.act(checkX, checkY);
-                            }
-                        }
-                    }
-                }
-            }
+
+            TestAI myAI = new TestAI(playerID());
+
+            myAI.runAI();
+            return true;
+
+
+            //// Move my thieves
+            //foreach (var thief in myThieves)
+            //{
+            //    // If the thief is alive and not frozen
+            //    if (thief.Alive == 1 && thief.FrozenTurnsLeft == 0)
+            //    {
+            //        int[] xChange = new int[] { -1, 1, 0, 0 };
+            //        int[] yChange = new int[] { 0, 0, -1, 1 };
+            //        // Try to dig or use a bomb before moving
+            //        if (thief.ThiefType == ThiefType.DIGGER && thief.SpecialsLeft > 0)
+            //        {
+            //            for (int i = 0; i < 4; i++)
+            //            {
+            //                // If there is a wall adjacent and an empty space on the other side
+            //                int checkX = thief.X + xChange[i];
+            //                int checkY = thief.Y + yChange[i];
+            //                Tile wallTile = getTile(checkX, checkY);
+            //                Tile emptyTile = getTile(checkX + xChange[i], checkY + yChange[i]);
+            //                // Must be on the map, and not trying to dig to the other side
+            //                if (wallTile != null && emptyTile != null && !onMySide(checkX + xChange[i]))
+            //                {
+            //                    // If there is a wall with an empty tile on the other side
+            //                    if (wallTile.Type == Tile.WALL && emptyTile.Type == Tile.EMPTY)
+            //                    {
+            //                        // Dig through the wall
+            //                        thief.useSpecial(checkX, checkY);
+            //                        //break out of the loop
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        else if (thief.ThiefType == ThiefType.BOMBER && thief.SpecialsLeft > 0)
+            //        {
+            //            for (int i = 0; i < 4; i++)
+            //            {
+            //                // The place to check for things to blow up
+            //                int checkX = thief.X + xChange[i];
+            //                int checkY = thief.Y + yChange[i];
+            //                // Make sure that the spot isn't on the other side
+            //                if (!onMySide(checkX))
+            //                {
+            //                    // If there is a wall tile there, blow it up
+            //                    Tile checkTile = getTile(checkX, checkY);
+            //                    if (checkTile != null && checkTile.Type == Tile.WALL)
+            //                    {
+            //                        // Blow up the wall
+            //                        thief.useSpecial(checkX, checkY);
+            //                        // Break out of the loop
+            //                        break;
+            //                    }
+            //                    // Otherwise check if there is a trap there
+            //                    Trap checkTrap = getTrap(checkX, checkY);
+            //                    // Don't want to blow up the sarcophagus!
+            //                    if (checkTrap != null && checkTrap.TrapType != TrapType.SARCOPHAGUS)
+            //                    {
+            //                        // Blow up the trap
+            //                        thief.useSpecial(checkX, checkY);
+            //                        // Break out of the loop
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        // If the thief has any movement left
+            //        if (thief.MovementLeft > 0)
+            //        {
+            //            // Find a path from the thief's location to the enemy sarcophagus
+            //            Queue<Point> path = new Queue<Point>();
+            //            int endX = enemySarcophagi[0].X;
+            //            int endY = enemySarcophagi[0].Y;
+            //            path = findPath(new Point(thief.X, thief.Y), new Point(endX, endY));
+            //            // If a path exists then move forward on the path
+            //            if (path.Count > 0)
+            //            {
+            //                Point nextMove = path.Dequeue();
+            //                thief.move(nextMove.x, nextMove.y);
+            //            }
+            //        }
+            //    }
+            //}
+            //// Do things with traps now
+            //List<Trap> myTraps = getMyTraps();
+            //foreach (var trap in myTraps)
+            //{
+            //    int[] xChange = new int[] { -1, 1, 0, 0 };
+            //    int[] yChange = new int[] { 0, 0, -1, 1 };
+            //    // Make sure trap can be used
+            //    if (trap.Active == 1)
+            //    {
+            //        // If trap is a boulder
+            //        if (trap.TrapType == TrapType.BOULDER)
+            //        {
+            //            // If there is an enemy thief adjancent
+            //            for (int i = 0; i < 4; i++)
+            //            {
+            //                Thief enemyThief = getThief(trap.X + xChange[i], trap.Y + yChange[i]);
+            //                // Roll over the thief
+            //                if (enemyThief != null)
+            //                {
+            //                    trap.act(enemyThief.X, enemyThief.Y);
+            //                    break;
+            //                }
+            //            }
+            //        }
+            //        else if (trap.TrapType == TrapType.MUMMY)
+            //        {
+            //            // Move around randomly if a mummy
+            //            int dir = rand.Next(4);
+            //            int checkX = trap.X + xChange[dir];
+            //            int checkY = trap.Y + yChange[dir];
+            //            Tile checkTile = getTile(checkX, checkY);
+            //            Trap checkTrap = getTrap(checkX, checkY);
+            //            // If the tile is empty, and there isn't a sarcophagus there
+            //            if (checkTrap == null || checkTrap.TrapType != TrapType.SARCOPHAGUS)
+            //            {
+            //                if (checkTile != null && checkTile.Type == Tile.EMPTY)
+            //                {
+            //                    //move on that tile
+            //                    trap.act(checkX, checkY);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
         return true;
     }
@@ -504,7 +511,7 @@ class AI : BaseAI
     }
 
     //returns a path from start to end, or nothing if no path is found.
-    Queue<Point> findPath(Point start, Point end)
+    public Queue<Point> findPath(Point start, Point end)
     {
         Stack<Point> reversedReturn = new Stack<Point>();
         Queue<Point> toReturn = new Queue<Point>();
@@ -563,10 +570,10 @@ class AI : BaseAI
     }
 }
 
-struct Point
-{
-    public int x;
-    public int y;
+//struct Point
+//{
+//    public int x;
+//    public int y;
 
-    public Point(int x, int y) { this.x = x; this.y = y; }
-};
+//    public Point(int x, int y) { this.x = x; this.y = y; }
+//};
