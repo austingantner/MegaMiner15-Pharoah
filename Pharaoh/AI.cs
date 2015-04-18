@@ -64,21 +64,21 @@ class AI : BaseAI
                 }
                 else if (placed == 1)
                 {
-                    tileBase = 575;
+                    tileBase = 200;
                 }
                 else if (placed == 2)
                 {
-                    tileBase = tiles.Length - 1;
+                    tileBase = 300;
                 }
                 Tile tile;
-                if (placed < 2)
-                {
+                //if (placed < 2)
+                //{
                     tile = tiles[tileBase + i];
-                }
-                else
-                {
-                    tile = tiles[tileBase - i];
-                }
+                //}
+                //else
+                //{
+                  //  tile = tiles[tileBase - i];
+                //}
                 //Bryce end changes
 
                 // If the tile is on my side and is empty
