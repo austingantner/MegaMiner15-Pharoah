@@ -86,6 +86,7 @@ class AI : BaseAI
                     me.placeTrap(tile.X, tile.Y, TrapType.SARCOPHAGUS);
                     mySarcophagiTiles.Add(tile);
                     sarcophagusCount--;
+                    placed++;
                     if (sarcophagusCount == 0)
                     {
                         break;
