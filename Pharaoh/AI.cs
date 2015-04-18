@@ -117,7 +117,7 @@ class AI : BaseAI
 
                 int[] tileBases = { 25, 50, 75, 100 };
                 Random rnd = new Random();
-                int tileBaseIdx = rnd.Next(3);
+                int tileBaseIdx = rnd.Next(4);
                 int tileBase = tileBases[tileBaseIdx];
 
                 Tile tile = tiles[tileBase + j];
