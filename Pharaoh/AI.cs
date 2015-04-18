@@ -112,8 +112,14 @@ class AI : BaseAI
                 //int tileNum = rnd.Next(tiles.Length);
                 //Tile tile = tiles[tileNum];
                 //Bryce end changes
-                
-                Tile tile = tiles[i];
+
+                int[] tileBases = { 0, 25, 50 };
+                Random rnd = new Random();
+                int tileBaseIdx = rnd.Next(2);
+                int tileBase = tileBases[tileBases[tileBaseIdx]];
+
+                Tile tile = tiles[tileBase + i];
+
 
 
                 if (onMySide(tile.X) && ! mySarcophagiTiles.Contains(tile))
