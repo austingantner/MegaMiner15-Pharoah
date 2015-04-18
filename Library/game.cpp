@@ -323,11 +323,11 @@ DLLEXPORT int playerPlaceTrap(_Player* object, int x, int y, int trapType)
       return 0;
 
   //invalid type
-  if(trapType < 0 or trapType >= c->TrapTypeCount)
+  if(trapType < 0 || trapType >= c->TrapTypeCount)
     return 0;
 
   _TrapType* type = getTrapType(c, trapType);
-  _Tile* tile;
+  _Tile* tile = nullptr;
   for (int i = 0; i < c->TileCount; ++i)
   {
     tile = getTile(c, i);
@@ -508,7 +508,7 @@ DLLEXPORT int trapAct(_Trap* object, int x, int y)
 
     int deathX = object->x;
     int deathY = object->y;
-    _Tile* tile;
+    _Tile* tile = nullptr;
 
     do
     {
@@ -594,11 +594,6 @@ DLLEXPORT int trapAct(_Trap* object, int x, int y)
   if(object->activationsRemaining == 0)
   {
     object->active = 0;
-  }
-  else if(trap->cooldown)
-  {
-    object->active = 0;
-    object->turnsTillActive = trap->cooldown;
   }
 
   return 1;
@@ -703,7 +698,7 @@ DLLEXPORT int thiefMove(_Thief* object, int x, int y)
 
   //check for activatesOnWalkedThrough
   //check for traps on the tile
-  _Trap* trap;
+  _Trap* trap = nullptr;
   for(int i = 0; i < c->TrapCount; ++i)
   {
     trap = getTrap(c, i);
@@ -840,7 +835,7 @@ DLLEXPORT int thiefUseSpecial(_Thief* object, int x, int y)
     object->y = newy;
     
     // Check for oil vase
-    _Trap* vase;
+    _Trap* vase = nullptr;
     bool isVase = false;
     for(int i = 0; i < c->TrapCount; ++i)
     {
