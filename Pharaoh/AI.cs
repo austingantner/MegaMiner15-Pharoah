@@ -50,35 +50,34 @@ class AI : BaseAI
             List<Tile> mySarcophagiTiles = new List<Tile>();
             // Find the first open tiles and place the sarcophagi there
             int placed = 0;
-            for (int i = 0; i < tiles.Length; i++)
+            for (int i = tiles.Length; i > 0; i--)
             {
                 //Bryce changed first tiles to random tiles
                 //Random rnd = new Random();
                 //int tileNum = rnd.Next(tiles.Length);
                 //Tile tile = tiles[tileNum];
                 //Bryce end changed
-                int tileBase = 0;
+                int tileBase = 599;
                 if (placed == 0)
                 {
-                    tileBase = 0;
+                    tileBase = 599;
                 }
                 else if (placed == 1)
                 {
-                    tileBase = 200;
+                    tileBase = 574;
                 }
                 else if (placed == 2)
                 {
-                    tileBase = 300;
+                    tileBase = 24;
                 }
                 Tile tile;
-                //if (placed < 2)
-                //{
+                tile = tiles[tileBase - i];
+                if (placed ==1)
+                {
                     tile = tiles[tileBase + i];
-                //}
-                //else
-                //{
-                  //  tile = tiles[tileBase - i];
-                //}
+                }
+                
+
                 //Bryce end changes
 
                 // If the tile is on my side and is empty
