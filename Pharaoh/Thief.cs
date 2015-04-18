@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 public class Thief : Mappable
 {
 
+    // sarcophagus target added by Bryce
+    int target = 0;
+
     public Thief()
     {
     }

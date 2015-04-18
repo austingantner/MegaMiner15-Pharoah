@@ -64,21 +64,23 @@ class AI : BaseAI
                 }
                 else if (placed == 1)
                 {
-                    tileBase = 600;
+                    tileBase = 575;
                 }
                 else if (placed == 2)
                 {
                     tileBase = tiles.Length - 1;
                 }
                 Tile tile;
-                if (placed < 3)
+                if (placed < 2)
                 {
                     tile = tiles[tileBase + i];
                 }
                 else
                 {
-                    tile = tiles[tileBase - i + 2];
+                    tile = tiles[tileBase - i];
                 }
+                //Bryce end changes
+
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
                 {
@@ -86,7 +88,11 @@ class AI : BaseAI
                     me.placeTrap(tile.X, tile.Y, TrapType.SARCOPHAGUS);
                     mySarcophagiTiles.Add(tile);
                     sarcophagusCount--;
+
+                    //Bryce added number of sarcohpogas changed
                     placed++;
+                    //Bryce end chagnes
+
                     if (sarcophagusCount == 0)
                     {
                         break;
