@@ -216,3 +216,6 @@ libclient.so
 Makefile.dependencies
 client
 !jna.jar
+
+*.DS_Store
+*.gamelog
