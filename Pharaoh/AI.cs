@@ -51,7 +51,12 @@ class AI : BaseAI
             // Find the first open tiles and place the sarcophagi there
             for (int i = 0; i < tiles.Length; i++)
             {
-                Tile tile = tiles[i];
+                //Bryce changed first tiles to random tiles
+                Random rnd = new Random();
+                int tileNum = rnd.Next(tiles.Length);
+                Tile tile = tiles[tileNum];
+                //Bryce end changed
+
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
                 {
@@ -72,7 +77,13 @@ class AI : BaseAI
             for (int i = 0; i < tiles.Length; i++)
             {
                 // If the tile is on my side and I haven't placed a sarcophagus on it
-                Tile tile = tiles[i];
+                
+                //Bryce changed first tiles to random tiles
+                Random rnd = new Random();
+                int tileNum = rnd.Next(tiles.Length);
+                Tile tile = tiles[tileNum];
+                //Bryce end changes
+
                 if (onMySide(tile.X) && ! mySarcophagiTiles.Contains(tile))
                 {
                     // Make sure there isn't a trap on that tile
