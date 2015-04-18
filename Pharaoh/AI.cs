@@ -145,8 +145,14 @@ class AI : BaseAI
             List<Tile> spawnTiles = getMySpawns();
             // Find my thieves
             List<Thief> myThieves = getMyThieves();
+            
+            
             // Select a random thief type
-            int thiefNo = rand.Next(thiefTypes.Length);
+            //int thiefNo = rand.Next(thiefTypes.Length);
+            
+            //Bryce changed rand theif to all slaves
+            int thiefNo = 4;
+            
             // If you can afford the thief
             if (me.Scarabs >= thiefTypes[thiefNo].Cost)
             {
