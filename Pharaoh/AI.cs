@@ -203,7 +203,20 @@ class AI : BaseAI
             //int thiefNo = rand.Next(thiefTypes.Length);
             
             //Bryce changed rand theif to all slaves
+
+            int Nincount = 0;
             int thiefNo = 4;
+            foreach (var thief in myThieves)
+            {
+                if (thief.ThiefType == 2)
+                {
+                    Nincount++;
+                }
+            }
+            if (Nincount < 4)
+            {
+                thiefNo = 2;
+            }
             
             // If you can afford the thief
             if (me.Scarabs >= thiefTypes[thiefNo].Cost)
