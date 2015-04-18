@@ -64,11 +64,11 @@ class AI : BaseAI
                 }
                 else if (placed == 1)
                 {
-                    tileBase = 200;
+                    tileBase = 320;
                 }
                 else if (placed == 2)
                 {
-                    tileBase = 300;
+                    tileBase = 520;
                 }
                 Tile tile;
                 //if (placed < 2)
