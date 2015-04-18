@@ -115,7 +115,7 @@ class AI : BaseAI
                 //Tile tile = tiles[tileNum];
                 //Bryce end changes
 
-                int[] tileBases = { 0, 25, 50, 75 };
+                int[] tileBases = { 25, 50, 75, 100 };
                 Random rnd = new Random();
                 int tileBaseIdx = rnd.Next(3);
                 int tileBase = tileBases[tileBaseIdx];
