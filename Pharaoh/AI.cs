@@ -14,7 +14,7 @@ class AI : BaseAI
     
     public override string username()
     {
-        return "Shell AI";
+        return "us";
     }
 
     public override string password()
@@ -49,14 +49,36 @@ class AI : BaseAI
             int sarcophagusCount = mySarcophagi.Count;
             List<Tile> mySarcophagiTiles = new List<Tile>();
             // Find the first open tiles and place the sarcophagi there
+            int placed = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
                 //Bryce changed first tiles to random tiles
-                Random rnd = new Random();
-                int tileNum = rnd.Next(tiles.Length);
-                Tile tile = tiles[tileNum];
+                //Random rnd = new Random();
+                //int tileNum = rnd.Next(tiles.Length);
+                //Tile tile = tiles[tileNum];
                 //Bryce end changed
-
+                int tileBase = 0;
+                if (placed == 0)
+                {
+                    tileBase = 0;
+                }
+                else if (placed == 1)
+                {
+                    tileBase = 600;
+                }
+                else if (placed == 2)
+                {
+                    tileBase = tiles.Length - 1;
+                }
+                Tile tile;
+                if (placed < 3)
+                {
+                    tile = tiles[tileBase + i];
+                }
+                else
+                {
+                    tile = tiles[tileBase - i + 2];
+                }
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
                 {
@@ -79,10 +101,13 @@ class AI : BaseAI
                 // If the tile is on my side and I haven't placed a sarcophagus on it
                 
                 //Bryce changed first tiles to random tiles
-                Random rnd = new Random();
-                int tileNum = rnd.Next(tiles.Length);
-                Tile tile = tiles[tileNum];
+                //Random rnd = new Random();
+                //int tileNum = rnd.Next(tiles.Length);
+                //Tile tile = tiles[tileNum];
                 //Bryce end changes
+                
+                Tile tile = tiles[i];
+
 
                 if (onMySide(tile.X) && ! mySarcophagiTiles.Contains(tile))
                 {
