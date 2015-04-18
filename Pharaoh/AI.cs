@@ -64,7 +64,7 @@ class AI : BaseAI
                 }
                 else if (placed == 1)
                 {
-                    tileBase = 320;
+                    tileBase = 120;
                 }
                 else if (placed == 2)
                 {
@@ -103,6 +103,8 @@ class AI : BaseAI
             // Make sure there aren't too many traps spawned
             int[] trapCount = Enumerable.Repeat(0, trapTypes.Length).ToArray();
             // Continue spawning traps until there isn't enough money to spend
+            int tPlaced = 0;
+            int j = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
                 // If the tile is on my side and I haven't placed a sarcophagus on it
@@ -113,14 +115,22 @@ class AI : BaseAI
                 //Tile tile = tiles[tileNum];
                 //Bryce end changes
 
-                int[] tileBases = { 0, 25, 50 };
+                int[] tileBases = { 0, 25, 50, 75 };
                 Random rnd = new Random();
-                int tileBaseIdx = rnd.Next(2);
-                int tileBase = tileBases[tileBases[tileBaseIdx]];
+                int tileBaseIdx = rnd.Next(3);
+                int tileBase = tileBases[tileBaseIdx];
 
-                Tile tile = tiles[tileBase + i];
+                Tile tile = tiles[tileBase + j];
 
-
+                if (tPlaced==1)
+                {
+                    tPlaced = 0;
+                    j = 0;
+                }
+                else
+                {
+                    j++;
+                }
 
                 if (onMySide(tile.X) && ! mySarcophagiTiles.Contains(tile))
                 {
@@ -145,12 +155,14 @@ class AI : BaseAI
                             me.placeTrap(tile.X, tile.Y, trapType);
                             trapCount[trapType]++;
                             myScarabs -= trapTypes[trapType].Cost;
+                            tPlaced = 1;
                         }
                         else if (trapTypes[trapType].CanPlaceOnWalls == 0 && tile.Type == Tile.EMPTY)
                         {
                             me.placeTrap(tile.X, tile.Y, trapType);
                             trapCount[trapType]++;
                             myScarabs -= trapTypes[trapType].Cost;
+                            tPlaced = 1;
                         }
                     }
                     else
