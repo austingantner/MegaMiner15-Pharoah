@@ -115,7 +115,7 @@ class AI : BaseAI
                 //Tile tile = tiles[tileNum];
                 //Bryce end changes
 
-                int[] tileBases = { 0, 25, 50, 75 };
+                int[] tileBases = { 25, 50, 75, 100 };
                 Random rnd = new Random();
                 int tileBaseIdx = rnd.Next(3);
                 int tileBase = tileBases[tileBaseIdx];
@@ -141,7 +141,7 @@ class AI : BaseAI
                     }
                     // Select a random trap type (make sure it isn't a sarcophagus)
 
-                    int trapType = 9;
+                    int trapType = 5;
                     //int trapType = rand.Next(trapTypes.Length - 1) + 1;
                     // Make sure another can be spawned
                     if (trapCount[trapType] >= trapTypes[trapType].MaxInstances)
@@ -203,7 +203,20 @@ class AI : BaseAI
             //int thiefNo = rand.Next(thiefTypes.Length);
             
             //Bryce changed rand theif to all slaves
+
+            int Nincount = 0;
             int thiefNo = 4;
+            foreach (var thief in myThieves)
+            {
+                if (thief.ThiefType == 2)
+                {
+                    Nincount++;
+                }
+            }
+            if (Nincount < 4)
+            {
+                thiefNo = 2;
+            }
             
             // If you can afford the thief
             if (me.Scarabs >= thiefTypes[thiefNo].Cost)
