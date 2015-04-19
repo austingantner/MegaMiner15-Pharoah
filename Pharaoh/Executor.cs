@@ -25,8 +25,7 @@ namespace Pharaoh
                     Point p = new Point(mission.thief.X, mission.thief.Y);
                     Queue<Point> path = findPath(mission.thief.position, mission.targets[0]);
                     // If a path exists then move forward on the path
-                    int i = 0;
-                    while (path.Count > 0 && mission.thief.MovementLeft > 0 && i++ < 25)
+                    if (path.Count > 0)
                     {
                         Point nextMove = path.Dequeue();
                         mission.thief.move(nextMove.x, nextMove.y);
