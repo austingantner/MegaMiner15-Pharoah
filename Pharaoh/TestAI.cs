@@ -42,7 +42,7 @@ namespace Pharaoh
             }
             foreach (Thief t in BaseAI.thieves)
             {
-                if (t.Owner == playerID)
+                if (t.Owner == playerID && t.ThiefType != ThiefType.BOMBER && t.ThiefType != ThiefType.SLAVE)
                 {
                     //for (int i = 0; i < 5; i++)
                         missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
