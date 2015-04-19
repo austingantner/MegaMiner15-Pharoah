@@ -322,6 +322,13 @@ class AI : BaseAI
                 mercTile = getTile(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y + 4);
                 me.placeTrap(mercTile.X, mercTile.Y, 9);
             }
+            for (int e = 0; e < 3; e++)
+            {
+                for (int f = 0; f < 5; f++)
+                {
+                    me.placeTrap(mySarcophagiTiles[0].X + e, mySarcophagiTiles[0].Y + f, 9);
+                }
+            }
             for (int e = 0; e < 5; e++)
             {
                 for (int f = 0; f < 5; f++)
