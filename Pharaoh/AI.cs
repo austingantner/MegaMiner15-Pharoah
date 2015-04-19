@@ -29,11 +29,227 @@ class AI : BaseAI
     /// <returns>True to end your turn. False to ask the server for updated information.</returns>
     public override bool run()
     {
+
+
+
+
+//        // Lists to track sarcophagi
+//        List<Trap> mySarcophagi = new List<Trap>();
+//        List<Trap> enemySarcophagi = new List<Trap>();
+
+//#region FirstTurn
+//        // If it's the first turn, place traps
+//        if (roundTurnNumber() <= 1)
+//        {
+//            // Find my sarcophagi
+//            foreach (var trap in traps)
+//            {
+//                if (trap.Owner == playerID() && trap.TrapType == TrapType.SARCOPHAGUS)
+//                {
+//                    mySarcophagi.Add(trap);
+//                }
+//            }
+
+//            int myScarabs = me.Scarabs;
+//            int sarcophagusCount = mySarcophagi.Count;
+//            List<Tile> mySarcophagiTiles = new List<Tile>();
+//            // Find the first open tiles and place the sarcophagi there
+//            int placed = 0;
+//            for (int i = 0; i < tiles.Length; i++)
+//            {
+//                //Bryce changed first tiles to random tiles
+//                //Random rnd = new Random();
+//                //int tileNum = rnd.Next(tiles.Length);
+//                //Tile tile = tiles[tileNum];
+//                //Bryce end changed
+//                int tileBase = 0;
+//                if (placed == 0)
+//                {
+//                    tileBase = 0;
+//                }
+//                else if (placed == 1)
+//                {
+//                    tileBase = 120;
+//                }
+//                else if (placed == 2)
+//                {
+//                    tileBase = 520;
+//                }
+//                Tile tile;
+//                //if (placed < 2)
+//                //{
+//                    tile = tiles[tileBase + i];
+//                //}
+//                //else
+//                //{
+//                  //  tile = tiles[tileBase - i];
+//                //}
+//                //Bryce end changes
+
+//                // If the tile is on my side and is empty
+//                if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
+//                {
+//                    // Move my sarcophagus to that location
+//                    me.placeTrap(tile.X, tile.Y, TrapType.SARCOPHAGUS);
+//                    mySarcophagiTiles.Add(tile);
+//                    sarcophagusCount--;
+
+//                    //Bryce added number of sarcohpogas changed
+//                    placed++;
+//                    //Bryce end chagnes
+
+//                    if (sarcophagusCount == 0)
+//                    {
+//                        break;
+//                    }
+//                }
+//            }
+
+//            // Make sure there aren't too many traps spawned
+//            int[] trapCount = Enumerable.Repeat(0, trapTypes.Length).ToArray();
+//            // Continue spawning traps until there isn't enough money to spend
+//            int tPlaced = 0;
+//            int j = 0;
+//            for (int i = 0; i < tiles.Length; i++)
+//            {
+//                // If the tile is on my side and I haven't placed a sarcophagus on it                
+//                //Bryce changed first tiles to random tiles
+//                //Random rnd = new Random();
+//                //int tileNum = rnd.Next(tiles.Length);
+//                //Tile tile = tiles[tileNum];
+//                //Bryce end changes
+
+//                int[] tileBases = { 25, 50, 75, 100 };
+//                Random rnd = new Random();
+//                int tileBaseIdx = rnd.Next(4);
+//                int tileBase = tileBases[tileBaseIdx];
+
+//                Tile tile = tiles[tileBase + j];
+
+//                if (tPlaced==1)
+//                {
+//                    tPlaced = 0;
+//                    j = 0;
+//                }
+//                else
+//                {
+//                    j++;
+//                }
+
+//                if (onMySide(tile.X) && ! mySarcophagiTiles.Contains(tile))
+//                {
+//                    // Make sure there isn't a trap on that tile
+//                    if (getTrap(tile.X, tile.Y) != null)
+//                    {
+//                        continue;
+//                    }
+//                    // Select a random trap type (make sure it isn't a sarcophagus)
+
+//                    int trapType = 5;
+//                    //int trapType = rand.Next(trapTypes.Length - 1) + 1;
+//                    // Make sure another can be spawned
+//                    if (trapCount[trapType] >= trapTypes[trapType].MaxInstances)
+//                    {
+//                        continue;
+//                    }
+//                    // If there are enough scarabs
+//                    if (myScarabs >= trapTypes[trapType].Cost)
+//                    {
+//                        // Check if the tile is the right type (wall or empty)
+//                        if (trapTypes[trapType].CanPlaceOnWalls == 1 && tile.Type == Tile.WALL)
+//                        {
+//                            me.placeTrap(tile.X, tile.Y, trapType);
+//                            trapCount[trapType]++;
+//                            myScarabs -= trapTypes[trapType].Cost;
+//                            tPlaced = 1;
+//                        }
+//                        else if (trapTypes[trapType].CanPlaceOnWalls == 0 && tile.Type == Tile.EMPTY)
+//                        {
+//                            me.placeTrap(tile.X, tile.Y, trapType);
+//                            trapCount[trapType]++;
+//                            myScarabs -= trapTypes[trapType].Cost;
+//                            tPlaced = 1;
+//                        }
+//                    }
+//                    else
+//                    {
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//#endregion
+//        // Otherwise it's time to move and purchase thieves and activate traps
+//        else
+//        {
+//            // Find my sarcophagi and the enemy sarcophagi
+//            foreach (var trap in traps)
+//            {
+//                if (trap.TrapType == TrapType.SARCOPHAGUS)
+//                {
+//                    if (trap.Owner != playerID())
+//                    {
+//                        enemySarcophagi.Add(trap);
+//                    }
+//                    else
+//                    {
+//                        mySarcophagi.Add(trap);
+//                    }
+//                }
+//            }
+//            // Find my spawn tiles
+//            List<Tile> spawnTiles = getMySpawns();
+//            // Find my thieves
+//            List<Thief> myThieves = getMyThieves();
+            
+            
+//            // Select a random thief type
+//            //int thiefNo = rand.Next(thiefTypes.Length);
+            
+//            //Bryce changed rand theif to all slaves
+
+//            int Nincount = 0;
+//            int thiefNo = 4;
+//            foreach (var thief in myThieves)
+//            {
+//                if (thief.ThiefType == 2)
+//                {
+//                    Nincount++;
+//                }
+//            }
+//            if (Nincount < 4)
+//            {
+//                thiefNo = 2;
+//            }
+            
+//            // If you can afford the thief
+//            if (me.Scarabs >= thiefTypes[thiefNo].Cost)
+//            {
+//                // Make sure another can be spawned
+//                int max = thiefTypes[thiefNo].MaxInstances;
+//                int count = 0;
+//                foreach (var thief in myThieves)
+//                {
+//                    if (thief.ThiefType == thiefNo)
+//                    {
+//                        count++;
+//                    }
+//                }
+//                // Only spawn if there aren't too many
+//                if (count < max)
+//                {
+//                    // Select a random spawn location
+//                    int spawnLoc = rand.Next(spawnTiles.Count);
+//                    // Spawn a thief there
+//                    Tile spawnTile = spawnTiles[spawnLoc];
+//                    me.purchaseThief(spawnTile.X, spawnTile.Y, thiefNo);
+//                }
+//            }
         // Lists to track sarcophagi
         List<Trap> mySarcophagi = new List<Trap>();
         List<Trap> enemySarcophagi = new List<Trap>();
 
-#region FirstTurn
+        #region FirstTurn
         // If it's the first turn, place traps
         if (roundTurnNumber() <= 1)
         {
@@ -50,38 +266,9 @@ class AI : BaseAI
             int sarcophagusCount = mySarcophagi.Count;
             List<Tile> mySarcophagiTiles = new List<Tile>();
             // Find the first open tiles and place the sarcophagi there
-            int placed = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
-                //Bryce changed first tiles to random tiles
-                //Random rnd = new Random();
-                //int tileNum = rnd.Next(tiles.Length);
-                //Tile tile = tiles[tileNum];
-                //Bryce end changed
-                int tileBase = 0;
-                if (placed == 0)
-                {
-                    tileBase = 0;
-                }
-                else if (placed == 1)
-                {
-                    tileBase = 120;
-                }
-                else if (placed == 2)
-                {
-                    tileBase = 520;
-                }
-                Tile tile;
-                //if (placed < 2)
-                //{
-                    tile = tiles[tileBase + i];
-                //}
-                //else
-                //{
-                  //  tile = tiles[tileBase - i];
-                //}
-                //Bryce end changes
-
+                Tile tile = tiles[i];
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
                 {
@@ -89,11 +276,6 @@ class AI : BaseAI
                     me.placeTrap(tile.X, tile.Y, TrapType.SARCOPHAGUS);
                     mySarcophagiTiles.Add(tile);
                     sarcophagusCount--;
-
-                    //Bryce added number of sarcohpogas changed
-                    placed++;
-                    //Bryce end chagnes
-
                     if (sarcophagusCount == 0)
                     {
                         break;
@@ -104,35 +286,11 @@ class AI : BaseAI
             // Make sure there aren't too many traps spawned
             int[] trapCount = Enumerable.Repeat(0, trapTypes.Length).ToArray();
             // Continue spawning traps until there isn't enough money to spend
-            int tPlaced = 0;
-            int j = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
-                // If the tile is on my side and I haven't placed a sarcophagus on it                
-                //Bryce changed first tiles to random tiles
-                //Random rnd = new Random();
-                //int tileNum = rnd.Next(tiles.Length);
-                //Tile tile = tiles[tileNum];
-                //Bryce end changes
-
-                int[] tileBases = { 25, 50, 75, 100 };
-                Random rnd = new Random();
-                int tileBaseIdx = rnd.Next(4);
-                int tileBase = tileBases[tileBaseIdx];
-
-                Tile tile = tiles[tileBase + j];
-
-                if (tPlaced==1)
-                {
-                    tPlaced = 0;
-                    j = 0;
-                }
-                else
-                {
-                    j++;
-                }
-
-                if (onMySide(tile.X) && ! mySarcophagiTiles.Contains(tile))
+                // If the tile is on my side and I haven't placed a sarcophagus on it
+                Tile tile = tiles[i];
+                if (onMySide(tile.X) && !mySarcophagiTiles.Contains(tile))
                 {
                     // Make sure there isn't a trap on that tile
                     if (getTrap(tile.X, tile.Y) != null)
@@ -140,9 +298,7 @@ class AI : BaseAI
                         continue;
                     }
                     // Select a random trap type (make sure it isn't a sarcophagus)
-
-                    int trapType = 5;
-                    //int trapType = rand.Next(trapTypes.Length - 1) + 1;
+                    int trapType = rand.Next(trapTypes.Length - 1) + 1;
                     // Make sure another can be spawned
                     if (trapCount[trapType] >= trapTypes[trapType].MaxInstances)
                     {
@@ -157,14 +313,12 @@ class AI : BaseAI
                             me.placeTrap(tile.X, tile.Y, trapType);
                             trapCount[trapType]++;
                             myScarabs -= trapTypes[trapType].Cost;
-                            tPlaced = 1;
                         }
                         else if (trapTypes[trapType].CanPlaceOnWalls == 0 && tile.Type == Tile.EMPTY)
                         {
                             me.placeTrap(tile.X, tile.Y, trapType);
                             trapCount[trapType]++;
                             myScarabs -= trapTypes[trapType].Cost;
-                            tPlaced = 1;
                         }
                     }
                     else
@@ -174,7 +328,7 @@ class AI : BaseAI
                 }
             }
         }
-#endregion
+        #endregion
         // Otherwise it's time to move and purchase thieves and activate traps
         else
         {
@@ -197,27 +351,8 @@ class AI : BaseAI
             List<Tile> spawnTiles = getMySpawns();
             // Find my thieves
             List<Thief> myThieves = getMyThieves();
-            
-            
             // Select a random thief type
-            //int thiefNo = rand.Next(thiefTypes.Length);
-            
-            //Bryce changed rand theif to all slaves
-
-            int Nincount = 0;
-            int thiefNo = 4;
-            foreach (var thief in myThieves)
-            {
-                if (thief.ThiefType == 2)
-                {
-                    Nincount++;
-                }
-            }
-            if (Nincount < 4)
-            {
-                thiefNo = 2;
-            }
-            
+            int thiefNo = rand.Next(thiefTypes.Length);
             // If you can afford the thief
             if (me.Scarabs >= thiefTypes[thiefNo].Cost)
             {
@@ -241,7 +376,6 @@ class AI : BaseAI
                     me.purchaseThief(spawnTile.X, spawnTile.Y, thiefNo);
                 }
             }
-
             TestAI myAI = new TestAI(playerID());
 
             myAI.runAI();
@@ -391,7 +525,10 @@ class AI : BaseAI
     /// <summary>
     /// This function is called once, after your last turn.
     /// </summary>
-    public override void end() { }
+    public override void end() 
+    {
+        System.Console.WriteLine("Game Over");
+    }
 
     public AI(IntPtr c)
         : base(c) { }

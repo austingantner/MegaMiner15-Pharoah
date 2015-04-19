@@ -22,6 +22,8 @@ namespace Pharaoh
 
         public void runAI()
         {
+
+
             List<Mission> missions = new List<Mission>();
             foreach (Thief t in BaseAI.thieves)
             {

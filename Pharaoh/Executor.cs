@@ -26,13 +26,43 @@ namespace Pharaoh
                     Queue<Point> path = findPath(mission.thief.position, mission.targets[0]);
                     // If a path exists then move forward on the path
                     int i = 0;
-                    while (path.Count > 0 && mission.thief.MovementLeft > 0 && i++ < 25)
+                    while (path.Count > 0 && mission.thief.Alive == 1 && mission.thief.FrozenTurnsLeft == 0 && mission.thief.MovementLeft > 0 && i++ < 25)
                     {
+                        //Point nextMove = path.Dequeue();
+                        //Console.WriteLine("start: " + i);
+                        //mission.thief.position.print();
+                        //Console.Write(" | ");
+                        //nextMove.print();
+                        //Console.WriteLine();
+                        //mission.thief.move(nextMove.x, nextMove.y);
+                        //Console.WriteLine("end: " + i);
+
                         Point nextMove = path.Dequeue();
+                        //foreach (Trap t in BaseAI.traps)
+                        //{
+                        //    if (t.X == nextMove.x && t.Y == nextMove.y)
+                        //    {
+                        //        if (dealWithTrap(mission, t, nextMove,path))
+                        //            return;
+                        //    }
+                        //}
                         mission.thief.move(nextMove.x, nextMove.y);
                     }
                 }
             }
+        }
+
+        public bool dealWithTrap(Mission mission, Trap t, Point nextMove, Queue<Point> path)
+        {
+            //if snake pit do nothing
+
+            if (t.TrapType == TrapType.HEAD_WIRE)
+            {
+                mission.thief.move(nextMove.x, nextMove.y);
+                return true;
+            }
+            
+            return false;  
         }
 
         // Returns the tile at the given x,y position or null otherwise
