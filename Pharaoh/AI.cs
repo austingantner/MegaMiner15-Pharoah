@@ -308,6 +308,15 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             for (int i = 0; i < tiles.Length; i++)
             {
+                if (i == 0)
+                {
+                    i += 25;
+                }
+                if (i+7 % 25 == 0)
+                {
+                    i = 25 * (i/25 + 1);
+                }
+                
                 // If the tile is on my side and I haven't placed a sarcophagus on it
                 Tile tile = tiles[i];
                 if (onMySide(tile.X) && !mySarcophagiTiles.Contains(tile))
