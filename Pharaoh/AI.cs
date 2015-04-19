@@ -266,9 +266,27 @@ class AI : BaseAI
             int sarcophagusCount = mySarcophagi.Count;
             List<Tile> mySarcophagiTiles = new List<Tile>();
             // Find the first open tiles and place the sarcophagi there
+            int placed = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
-                Tile tile = tiles[i];
+                int tileBase = 0;
+                    if (placed == 0)
+                    {
+                        tileBase = 0;
+                    }
+                    else if (placed == 1)
+                    {
+                        tileBase = 120;
+                    }
+                    else if (placed == 2)
+                    {
+                        tileBase = 520;
+                    }
+                    Tile tile;
+                    //if (placed < 2)
+                    //{
+                    tile = tiles[tileBase + i];
+                //Tile tile = tiles[i];
 
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
@@ -277,6 +295,7 @@ class AI : BaseAI
                     me.placeTrap(tile.X, tile.Y, TrapType.SARCOPHAGUS);
                     mySarcophagiTiles.Add(tile);
                     sarcophagusCount--;
+                    placed++;
                     if (sarcophagusCount == 0)
                     {
                         break;
