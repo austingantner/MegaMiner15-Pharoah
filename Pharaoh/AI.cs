@@ -310,14 +310,15 @@ class AI : BaseAI
 
             foreach (var spawn in spawnTiles)
             {
-                foreach (var tile in tiles)
+                for (int i = 0; i < tiles.Length; i++)
                 {
-                    if (tile.Type == 0)
+                    
+                    if (tiles[i].Type == 0)
                     {
-                        if ((Math.Abs(tile.Y - spawn.Y) + Math.Abs(tile.X - spawn.X) == 2))
+                        if ((Math.Abs(tiles[i].Y - spawn.Y) + Math.Abs(tiles[i].X - spawn.X) == 2))
                         {
 
-                            tryTrap(tile, 5, mySarcophagiTiles, myScarabs, trapCount);
+                            tryTrap(tiles[i], 5, mySarcophagiTiles, myScarabs, trapCount);
                         }
                     }
                 }
