@@ -306,15 +306,13 @@ class AI : BaseAI
             // Make sure there aren't too many traps spawned
             int[] trapCount = Enumerable.Repeat(0, trapTypes.Length).ToArray();
             // Continue spawning traps until there isn't enough money to spend
+            int col = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
-                if (i == 0)
+                if (i % 25 > 8)
                 {
-                    i += 25;
-                }
-                if (i-7 % 25 == 0 || i-8 % 25 == 0)
-                {
-                    i = 25 * (i/25 + 1);
+                    col++;
+                    i = 25 * col;
                 }
                 
                 // If the tile is on my side and I haven't placed a sarcophagus on it
