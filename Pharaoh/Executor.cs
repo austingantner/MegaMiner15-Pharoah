@@ -157,15 +157,9 @@ namespace Pharaoh
             }
             else if (t.TrapType == TrapType.FAKE_ROTATING_WALL)
             {
-                if(t.ActivationsRemaining > 0)
+                for(int i = 0; i<mission.thief.MovementLeft; i++)
                 {
-                    Queue<Point> newPath = new Queue<Point>();
-                    newPath.Enqueue(nextMove);
-                    while (path.Count > 0)
-                    {
-                        newPath.Enqueue(path.Dequeue());
-                    }
-                    path = newPath;
+                    mission.thief.move(nextMove.x, nextMove.y);
                 }
                 return false;
             }
