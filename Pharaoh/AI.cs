@@ -325,7 +325,7 @@ class AI : BaseAI
                         continue;
                     }
                     // Select a random trap type (make sure it isn't a sarcophagus)
-                    int trapType = 5; // rand.Next(trapTypes.Length - 1) + 1;
+                    int trapType = rand.Next(trapTypes.Length - 1) + 1;
                     // Make sure another can be spawned
                     if (trapCount[trapType] >= trapTypes[trapType].MaxInstances)
                     {
@@ -379,7 +379,21 @@ class AI : BaseAI
             // Find my thieves
             List<Thief> myThieves = getMyThieves();
             // Select a random thief type
-            int thiefNo = rand.Next(thiefTypes.Length);
+
+            int Nincount = 0;
+            foreach (var thief in myThieves)
+            {
+                if (thief.ThiefType == 2)
+                {
+                    Nincount++;
+                }
+            }
+
+            int thiefNo = 4;
+            if (Nincount < 5)
+            {
+                thiefNo = 2;// rand.Next(thiefTypes.Length);
+            }
             // If you can afford the thief
             if (me.Scarabs >= thiefTypes[thiefNo].Cost)
             {
