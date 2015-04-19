@@ -269,6 +269,7 @@ class AI : BaseAI
             for (int i = 0; i < tiles.Length; i++)
             {
                 Tile tile = tiles[i];
+
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
                 {
