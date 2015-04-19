@@ -308,19 +308,44 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             List<Tile> spawnTiles = getMySpawns();
 
-            foreach (var spawn in spawnTiles)
+            for (int i = 0; i < tiles.Length; i++)
             {
-                foreach (var tile in tiles)
+                if (tiles[i].Type == 1)
                 {
-                    if (tile.Type == 0)
+                    if (tiles[i].X == 0)
                     {
-                        if ((Math.Abs(tile.X - spawn.X) == 1 && Math.Abs(tile.Y - spawn.Y) == 0) || (Math.Abs(tile.Y - spawn.Y)==1 && Math.Abs(tile.X - spawn.X) == 0))
+                        me.placeTrap(1, tiles[i].Y, 5);
+                        for (int j = 0; j < tiles.Length; j++)
                         {
-                            tryTrap(tile, 5, mySarcophagiTiles, myScarabs, trapCount);
+                            if (tiles[j].Type == 0 && tiles[j].X == 2 && tiles[j].Y == tiles[i].Y)
+                            {
+                                me.placeTrap(2, tiles[i].Y, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].X == 2 && tiles[j].Y == tiles[i].Y + 1)
+                            {
+                                me.placeTrap(2, tiles[i].Y + 1, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].X == 2 && tiles[j].Y == tiles[i].Y - 1)
+                            {
+                                me.placeTrap(2, tiles[i].Y - 1, 11);
+                            }
                         }
+                    }
+                    if (tiles[i].X == 24)
+                    {
+                        me.placeTrap(23, tiles[i].Y, 5);
+                    }
+                    if (tiles[i].Y == 0)
+                    {
+                        me.placeTrap(tiles[i].X, 1, 5);
+                    }
+                    if (tiles[i].Y == 24)
+                    {
+                        me.placeTrap(tiles[i].X, 23, 5);
                     }
                 }
             }
+
 
             int col = 0;
             for (int i = 0; i < tiles.Length; i++)
