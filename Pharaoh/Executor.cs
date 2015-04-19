@@ -54,15 +54,83 @@ namespace Pharaoh
 
         public bool dealWithTrap(Mission mission, Trap t, Point nextMove, Queue<Point> path)
         {
-            //if snake pit do nothing
-
-            if (t.TrapType == TrapType.HEAD_WIRE)
+            if (t.TrapType == TrapType.SARCOPHAGUS)
+            {
+                // YAY!
+                return false;
+            }
+            else if (t.TrapType == TrapType.SPIKE_PIT)
+            {
+                // If we can see it, then it has been tripped
+                return false;
+            }
+            else if (t.TrapType == TrapType.SWINGING_BLADE)
+            {      
+                // BLADES ARE BROKEN
+                //if (t.Active != 0)
+                //{
+                //    return true;
+                //}
+                return false;
+            }
+            else if (t.TrapType == TrapType.BOULDER)
+            {
+                // can't do much
+                return false;
+            }
+            else if (t.TrapType == TrapType.SPIDER_WEB)
+            {
+                // just take it out
+                return false;
+            }
+            else if (t.TrapType == TrapType.QUICKSAND)
+            {
+                // TODO: move off of it if stuck
+                return false;
+            }
+            else if (t.TrapType == TrapType.OIL_VASES)
+            {
+                return false;
+            }
+            else if (t.TrapType == TrapType.ARROW_WALL)
+            {                
+                if (mission.thief.MovementLeft > 1 && path.Count > 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            else if (t.TrapType == TrapType.HEAD_WIRE)
             {
                 mission.thief.move(nextMove.x, nextMove.y);
                 return true;
             }
+            else if (t.TrapType == TrapType.MERCURY_PIT)
+            {
+                destroy(mission.thief, t);
+                return true;
+            }
+            else if (t.TrapType == TrapType.MUMMY)
+            {
+                destroy(mission.thief, t);
+                return true;
+            }
+            else if (t.TrapType == TrapType.FAKE_ROTATING_WALL)
+            {
+                destroy(mission.thief, t);
+                return false;
+            }
             
             return false;  
+        }
+
+        void destroy(Thief thief, Trap trap)
+        {
+            if (thief.ThiefType == ThiefType.BOMBER && thief.SpecialsLeft > 0)
+            {
+                System.Console.WriteLine("Trap destroyed");
+                thief.useSpecial(trap.X, trap.Y);
+            }
         }
 
         // Returns the tile at the given x,y position or null otherwise
