@@ -38,14 +38,16 @@ namespace Pharaoh
                         //Console.WriteLine("end: " + i);
 
                         Point nextMove = path.Dequeue();
-                        //foreach (Trap t in BaseAI.traps)
-                        //{
-                        //    if (t.X == nextMove.x && t.Y == nextMove.y)
-                        //    {
-                        //        if (dealWithTrap(mission, t, nextMove,path))
-                        //            return;
-                        //    }
-                        //}
+                        foreach (Trap t in BaseAI.traps)
+                        {
+                            if (t.X == nextMove.x && t.Y == nextMove.y)
+                            {
+                                if (dealWithTrap(mission, t, nextMove, path))
+                                    return;
+                                else
+                                    break;
+                            }
+                        }
                         mission.thief.move(nextMove.x, nextMove.y);
                     }
                 }
