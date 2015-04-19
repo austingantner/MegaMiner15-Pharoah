@@ -318,7 +318,6 @@ class AI : BaseAI
                 tileIt++;
             }
             paTile = getTile(10, 10);
-            
             int endX = tiles[tileIt].X;
             int endY = tiles[tileIt].Y;
             tileIt = 200;
