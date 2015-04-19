@@ -15,7 +15,7 @@ namespace Pharaoh
                  execute(m);
              }
         }
-
+         
         public void execute(Mission mission)
         {
             if(mission.type == MissionType.goTo)
