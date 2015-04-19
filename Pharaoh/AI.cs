@@ -274,14 +274,14 @@ class AI : BaseAI
                     {
                         tileBase = 0;
                     }
-                    else if (placed == 1)
-                    {
-                        tileBase = 120;
-                    }
-                    else if (placed == 2)
-                    {
-                        tileBase = 520;
-                    }
+                    //else if (placed == 1)
+                    //{
+                     //   tileBase = 120;
+                    //}
+                    //else if (placed == 2)
+                    //{
+                     //   tileBase = 520;
+                    //}
                     Tile tile;
                     //if (placed < 2)
                     //{
