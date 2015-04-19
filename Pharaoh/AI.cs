@@ -316,6 +316,7 @@ class AI : BaseAI
                     {
                         if ((Math.Abs(tile.X - spawn.X) == 1 && Math.Abs(tile.Y - spawn.Y) == 0) || (Math.Abs(tile.Y - spawn.Y)==1 && Math.Abs(tile.X - spawn.X) == 0))
                         {
+
                             tryTrap(tile, 5, mySarcophagiTiles, myScarabs, trapCount);
                         }
                     }
