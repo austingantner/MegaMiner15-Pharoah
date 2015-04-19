@@ -310,7 +310,7 @@ class AI : BaseAI
 
             Queue<Point> path = new Queue<Point>();
             int endX = mySarcophagiTiles[0].X;
-            int endY = mySarcophagi[0].Y;
+            int endY = mySarcophagiTiles[0].Y;
             path = findPath(new Point(spawnTiles[0].X, spawnTiles[0].Y), new Point(endX, endY));
             // If a path exists then move forward on the path
             while (path.Count > 0)
