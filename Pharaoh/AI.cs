@@ -266,9 +266,27 @@ class AI : BaseAI
             int sarcophagusCount = mySarcophagi.Count;
             List<Tile> mySarcophagiTiles = new List<Tile>();
             // Find the first open tiles and place the sarcophagi there
+            int placed = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
-                Tile tile = tiles[i];
+                int tileBase = 0;
+                    if (placed == 0)
+                    {
+                        tileBase = 0;
+                    }
+                    else if (placed == 1)
+                    {
+                        tileBase = 120;
+                    }
+                    else if (placed == 2)
+                    {
+                        tileBase = 520;
+                    }
+                    Tile tile;
+                    //if (placed < 2)
+                    //{
+                    tile = tiles[tileBase + i];
+                //Tile tile = tiles[i];
 
                 // If the tile is on my side and is empty
                 if (onMySide(tile.X) && tile.Type == Tile.EMPTY)
@@ -277,6 +295,7 @@ class AI : BaseAI
                     me.placeTrap(tile.X, tile.Y, TrapType.SARCOPHAGUS);
                     mySarcophagiTiles.Add(tile);
                     sarcophagusCount--;
+                    placed++;
                     if (sarcophagusCount == 0)
                     {
                         break;
@@ -289,6 +308,15 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             for (int i = 0; i < tiles.Length; i++)
             {
+                if (i == 0)
+                {
+                    i += 25;
+                }
+                if (i+7 % 25 == 0)
+                {
+                    i = 25 * (i/25 + 1);
+                }
+                
                 // If the tile is on my side and I haven't placed a sarcophagus on it
                 Tile tile = tiles[i];
                 if (onMySide(tile.X) && !mySarcophagiTiles.Contains(tile))
