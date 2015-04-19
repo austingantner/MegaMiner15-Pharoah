@@ -22,14 +22,30 @@ namespace Pharaoh
 
         public void runAI()
         {
-
-
             List<Mission> missions = new List<Mission>();
+
+            foreach (Thief t in BaseAI.thieves)
+            {
+                if (t.Owner == playerID && t.ThiefType == ThiefType.SLAVE)
+                {
+                    for(int i = 0; i < 2; i++)
+                        missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
+                }
+            }
+            foreach (Thief t in BaseAI.thieves)
+            {
+                if (t.Owner == playerID && t.ThiefType == ThiefType.BOMBER)
+                {
+                    for (int i = 0; i < 3; i++)
+                        missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
+                }
+            }
             foreach (Thief t in BaseAI.thieves)
             {
                 if (t.Owner == playerID)
                 {
-                    missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
+                    for (int i = 0; i < 5; i++)
+                        missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
                 }
             }
             executor.execute(missions);

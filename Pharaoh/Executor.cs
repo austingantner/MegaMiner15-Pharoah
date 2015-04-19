@@ -120,14 +120,18 @@ namespace Pharaoh
                         }
                     }
                 }
-                if (mission.thief.ThiefType == ThiefType.NINJA)
+                else if (mission.thief.ThiefType == ThiefType.BOMBER && mission.thief.SpecialsLeft > 0)
+                {
+                    System.Console.WriteLine("Trap destroyed");
+                    mission.thief.useSpecial(t.X, t.Y);
+                }
+                else if (mission.thief.ThiefType == ThiefType.NINJA)
                 {
                     if (mission.thief.SpecialsLeft > 0)
                     {
                         return false;
                     }
                 }
-                destroy(mission.thief, t);
                 return true;
             }
             else if (t.TrapType == TrapType.MUMMY)
@@ -144,7 +148,7 @@ namespace Pharaoh
                         }
                     }
                 }
-                destroy(mission.thief, t);
+                //destroy(mission.thief, t);
                 if (t.TurnsTillActive > 0)
                 {
                     return false;
@@ -153,20 +157,10 @@ namespace Pharaoh
             }
             else if (t.TrapType == TrapType.FAKE_ROTATING_WALL)
             {
-                destroy(mission.thief, t);
                 return false;
             }
             
             return false;  
-        }
-
-        void destroy(Thief thief, Trap trap)
-        {
-            if (thief.ThiefType == ThiefType.BOMBER && thief.SpecialsLeft > 0)
-            {
-                System.Console.WriteLine("Trap destroyed");
-                thief.useSpecial(trap.X, trap.Y);
-            }
         }
 
         // Returns the tile at the given x,y position or null otherwise
