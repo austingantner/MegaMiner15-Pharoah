@@ -437,7 +437,7 @@ class AI : BaseAI
                     }
                     // Select a random trap type (make sure it isn't a sarcophagus)
 
-                    int trapType = 10; //= rand.Next(trapTypes.Length - 1) + 1;
+                    int trapType = rand.Next(trapTypes.Length - 4) + 4;
 
                     // Make sure another can be spawned
                     if (trapCount[trapType] >= trapTypes[trapType].MaxInstances)
