@@ -308,31 +308,19 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             List<Tile> spawnTiles = getMySpawns();
 
-            for (int i = 0; i < tiles.Length; i++)
+            foreach (var spawn in spawnTiles)
             {
-                if (tiles[i].Type == 1)
+                foreach (var tile in tiles)
                 {
-                    if (tiles[i].X == 0)
+                    if (tile.Type == 0)
                     {
-                        me.placeTrap(1, tiles[i].Y,5);
-                        
-                    }
-                    if (tiles[i].X == 24)
-                    {
-                        me.placeTrap(23,tiles[i].Y,5);
-                    }
-                    if (tiles[i].Y == 0)
-                    {
-                        me.placeTrap(tiles[i].X,1,5);
-                    }
-                    if (tiles[i].Y == 24)
-                    {
-                        me.placeTrap(tiles[i].X,23,5);
+                        if ((Math.Abs(tile.X - spawn.X) == 1 && Math.Abs(tile.Y - spawn.Y) == 0) || (Math.Abs(tile.Y - spawn.Y)==1 && Math.Abs(tile.X - spawn.X) == 0))
+                        {
+                            tryTrap(tile, 5, mySarcophagiTiles, myScarabs, trapCount);
+                        }
                     }
                 }
             }
-
-            
 
             int col = 0;
             for (int i = 0; i < tiles.Length; i++)
@@ -382,26 +370,28 @@ class AI : BaseAI
                     }
                 }
             }
+
         }
         #endregion
         // Otherwise it's time to move and purchase thieves and activate traps
         else
         {
             // Find my sarcophagi and the enemy sarcophagi
-            foreach (var trap in traps)
-            {
-                if (trap.TrapType == TrapType.SARCOPHAGUS)
-                {
-                    if (trap.Owner != playerID())
-                    {
-                        enemySarcophagi.Add(trap);
-                    }
-                    else
-                    {
-                        mySarcophagi.Add(trap);
-                    }
-                }
-            }
+            //foreach (var trap in traps)
+            //{
+            //    if (trap.TrapType == TrapType.SARCOPHAGUS)
+            //    {
+            //        if (trap.Owner != playerID())
+            //        {
+            //            enemySarcophagi.Add(trap);
+            //        }
+            //        else
+            //        {
+            //            mySarcophagi.Add(trap);
+            //        }
+            //    }
+            //}
+
             // Find my spawn tiles
             List<Tile> spawnTiles = getMySpawns();
             // Find my thieves
@@ -409,11 +399,16 @@ class AI : BaseAI
             // Select a random thief type
 
             int Nincount = 0;
+            int BombCount = 0;
             foreach (var thief in myThieves)
             {
                 if (thief.ThiefType == 2)
                 {
                     Nincount++;
+                }
+                if (thief.ThiefType == 0)
+                {
+                    BombCount++;
                 }
             }
 
@@ -421,6 +416,10 @@ class AI : BaseAI
             if (Nincount < 5)
             {
                 thiefNo = 2;// rand.Next(thiefTypes.Length);
+            }
+            else if (BombCount < 1)
+            {
+                thiefNo = 0;
             }
             // If you can afford the thief
             if (me.Scarabs >= thiefTypes[thiefNo].Cost)
@@ -796,33 +795,31 @@ class AI : BaseAI
             if (!(getTrap(tile.X, tile.Y) != null))
             {
                 
-                // Select a random trap type (make sure it isn't a sarcophagus)
+            // Select a random trap type (make sure it isn't a sarcophagus)
             
-                // Make sure another can be spawned
-                if (!(trapCount[trapType] >= trapTypes[trapType].MaxInstances))
-                {
+            // Make sure another can be spawned
+            if (!(trapCount[trapType] >= trapTypes[trapType].MaxInstances))
+            {
                 
-                    // If there are enough scarabs
-                    if (myScarabs >= trapTypes[trapType].Cost)
-                    {
-                        // Check if the tile is the right type (wall or empty)
-                        if (trapTypes[trapType].CanPlaceOnWalls == 1 && tile.Type == Tile.WALL)
-                        {
-                            me.placeTrap(tile.X, tile.Y, trapType);
-                            trapCount[trapType]++;
-                            myScarabs -= trapTypes[trapType].Cost;
-                            return true;
-                        }
-                        else if (trapTypes[trapType].CanPlaceOnWalls == 0 && tile.Type == Tile.EMPTY)
-                        {
-                            me.placeTrap(tile.X, tile.Y, trapType);
-                            trapCount[trapType]++;
-                            myScarabs -= trapTypes[trapType].Cost;
-                            return true;
-                        }
-                    }
+            // If there are enough scarabs
+            if (myScarabs >= trapTypes[trapType].Cost)
+            {
+                // Check if the tile is the right type (wall or empty)
+                if (trapTypes[trapType].CanPlaceOnWalls == 1 && tile.Type == Tile.WALL)
+                {
+                    me.placeTrap(tile.X, tile.Y, trapType);
+                    trapCount[trapType]++;
+                    myScarabs -= trapTypes[trapType].Cost;
+                    return true;
                 }
-            }
+                else if (trapTypes[trapType].CanPlaceOnWalls == 0 && tile.Type == Tile.EMPTY)
+                {
+                    me.placeTrap(tile.X, tile.Y, trapType);
+                    trapCount[trapType]++;
+                    myScarabs -= trapTypes[trapType].Cost;
+                    return true;
+                }
+            }}}
             
         }
         return false;
