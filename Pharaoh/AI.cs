@@ -306,6 +306,22 @@ class AI : BaseAI
             // Make sure there aren't too many traps spawned
             int[] trapCount = Enumerable.Repeat(0, trapTypes.Length).ToArray();
             // Continue spawning traps until there isn't enough money to spend
+            List<Tile> spawnTiles = getMySpawns();
+
+            foreach (var spawn in spawnTiles)
+            {
+                foreach (var tile in tiles)
+                {
+                    if (tile.Type == 0)
+                    {
+                        if (Math.Abs(tile.X - spawn.X) == 1 || Math.Abs(tile.Y - spawn.Y)==1)
+                        {
+                            tryTrap(tile, 5, mySarcophagiTiles, myScarabs, trapCount);
+                        }
+                    }
+                }
+            }
+
             int col = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -759,7 +775,49 @@ class AI : BaseAI
         }
         return toReturn;
     }
+
+    bool tryTrap(Tile tile, int trapType, List<Tile> mySarcophagiTiles, int myScarabs, int[] trapCount )
+    {
+        if (onMySide(tile.X) && !mySarcophagiTiles.Contains(tile))
+        {
+            // Make sure there isn't a trap on that tile
+            if (!(getTrap(tile.X, tile.Y) != null))
+            {
+                
+            // Select a random trap type (make sure it isn't a sarcophagus)
+            
+            // Make sure another can be spawned
+            if (!(trapCount[trapType] >= trapTypes[trapType].MaxInstances))
+            {
+                
+            // If there are enough scarabs
+            if (myScarabs >= trapTypes[trapType].Cost)
+            {
+                // Check if the tile is the right type (wall or empty)
+                if (trapTypes[trapType].CanPlaceOnWalls == 1 && tile.Type == Tile.WALL)
+                {
+                    me.placeTrap(tile.X, tile.Y, trapType);
+                    trapCount[trapType]++;
+                    myScarabs -= trapTypes[trapType].Cost;
+                    return true;
+                }
+                else if (trapTypes[trapType].CanPlaceOnWalls == 0 && tile.Type == Tile.EMPTY)
+                {
+                    me.placeTrap(tile.X, tile.Y, trapType);
+                    trapCount[trapType]++;
+                    myScarabs -= trapTypes[trapType].Cost;
+                    return true;
+                }
+            }}}
+            
+        }
+        return false;
+    }
+
 }
+
+
+
 
 //struct Point
 //{
