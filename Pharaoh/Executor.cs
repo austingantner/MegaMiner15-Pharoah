@@ -120,6 +120,13 @@ namespace Pharaoh
                         }
                     }
                 }
+                if (mission.thief.ThiefType == ThiefType.NINJA)
+                {
+                    if (mission.thief.SpecialsLeft > 0)
+                    {
+                        return false;
+                    }
+                }
                 destroy(mission.thief, t);
                 return true;
             }
