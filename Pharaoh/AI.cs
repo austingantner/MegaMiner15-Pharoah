@@ -308,18 +308,18 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             List<Tile> spawnTiles = getMySpawns();
 
-            Tile mercTile = getTile(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y+1);
-            if (mercTile.Type == 0)
-            {
-                me.placeTrap(mercTile.X, mercTile.Y, 9);
-                mercTile = getTile(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y + 2);
-                me.placeTrap(mercTile.X, mercTile.Y, 9);
-            }
-            mercTile = getTile(mySarcophagiTiles[0].X+1, mySarcophagiTiles[0].Y);
+            Tile mercTile = getTile(mySarcophagiTiles[0].X+1, mySarcophagiTiles[0].Y);
             if (mercTile.Type == 0)
             {
                 me.placeTrap(mercTile.X, mercTile.Y, 9);
                 mercTile = getTile(mySarcophagiTiles[0].X + 2, mySarcophagiTiles[0].Y);
+                me.placeTrap(mercTile.X, mercTile.Y, 9);
+            }
+            mercTile = getTile(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y + 3);
+            if (mercTile.Type == 0)
+            {
+                me.placeTrap(mercTile.X, mercTile.Y, 9);
+                mercTile = getTile(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y + 4);
                 me.placeTrap(mercTile.X, mercTile.Y, 9);
             }
             for (int e = 0; e < 5; e++)
