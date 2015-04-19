@@ -312,15 +312,17 @@ class AI : BaseAI
             if (mercTile.Type == 0)
             {
                 me.placeTrap(mercTile.X, mercTile.Y, 9);
+                mercTile = getTile(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y + 2);
+                me.placeTrap(mercTile.X, mercTile.Y, 9);
             }
-            else
+            mercTile = getTile(mySarcophagiTiles[0].X+1, mySarcophagiTiles[0].Y);
+            if (mercTile.Type == 0)
             {
-                mercTile = getTile(mySarcophagiTiles[0].X+1, mySarcophagiTiles[0].Y);
-                if (mercTile.Type == 0)
-                {
-                    me.placeTrap(mercTile.X, mercTile.Y, 9);
-                }
+                me.placeTrap(mercTile.X, mercTile.Y, 9);
+                mercTile = getTile(mySarcophagiTiles[0].X + 2, mySarcophagiTiles[0].Y);
+                me.placeTrap(mercTile.X, mercTile.Y, 9);
             }
+            
 
             for (int i = 0; i < tiles.Length; i++)
             {
