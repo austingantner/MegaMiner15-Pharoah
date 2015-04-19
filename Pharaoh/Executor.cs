@@ -38,14 +38,16 @@ namespace Pharaoh
                         //Console.WriteLine("end: " + i);
 
                         Point nextMove = path.Dequeue();
-                        //foreach (Trap t in BaseAI.traps)
-                        //{
-                        //    if (t.X == nextMove.x && t.Y == nextMove.y)
-                        //    {
-                        //        if (dealWithTrap(mission, t, nextMove,path))
-                        //            return;
-                        //    }
-                        //}
+                        foreach (Trap t in BaseAI.traps)
+                        {
+                            if (t.X == nextMove.x && t.Y == nextMove.y)
+                            {
+                                if (dealWithTrap(mission, t, nextMove, path))
+                                    return;
+                                else
+                                    break;
+                            }
+                        }
                         mission.thief.move(nextMove.x, nextMove.y);
                     }
                 }
@@ -66,11 +68,10 @@ namespace Pharaoh
             }
             else if (t.TrapType == TrapType.SWINGING_BLADE)
             {      
-                // BLADES ARE BROKEN
-                //if (t.Active != 0)
-                //{
-                //    return true;
-                //}
+                if (t.Active != 0)
+                {
+                    return true;
+                }
                 return false;
             }
             else if (t.TrapType == TrapType.BOULDER)
@@ -107,11 +108,28 @@ namespace Pharaoh
             }
             else if (t.TrapType == TrapType.MERCURY_PIT)
             {
+                // SACRAFICE THE SLAVES
+                if (mission.thief.ThiefType == ThiefType.SLAVE)
+                {
+                    return false;
+                }
                 destroy(mission.thief, t);
                 return true;
             }
             else if (t.TrapType == TrapType.MUMMY)
             {
+                // SACRAFICE THE SLAVES if another unit is on the same square
+                // idea is to proc cooldown
+                if (mission.thief.ThiefType == ThiefType.SLAVE)
+                {
+                    foreach (Thief myThief in BaseAI.thieves)
+                    {
+                        if (myThief.Id != mission.thief.Id && myThief.X == mission.thief.X && myThief.Y == mission.thief.Y)
+                        {
+                            return false;
+                        }
+                    }
+                }
                 destroy(mission.thief, t);
                 return true;
             }
