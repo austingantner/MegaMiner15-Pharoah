@@ -26,7 +26,7 @@ namespace Pharaoh
                     Queue<Point> path = findPath(mission.thief.position, mission.targets[0]);
                     // If a path exists then move forward on the path
                     int i = 0;
-                    while (path.Count > 0 && mission.thief.Alive == 1 && mission.thief.FrozenTurnsLeft == 0 && mission.thief.MovementLeft > 0 && i++ < 25)
+                    while (path.Count > 0 && mission.thief.Alive == 1 && mission.thief.FrozenTurnsLeft == 0 && mission.thief.MovementLeft > 0 && i++ < 6)
                     {
                         //Point nextMove = path.Dequeue();
                         //Console.WriteLine("start: " + i);
@@ -157,15 +157,9 @@ namespace Pharaoh
             }
             else if (t.TrapType == TrapType.FAKE_ROTATING_WALL)
             {
-                if(t.ActivationsRemaining > 0)
+                for(int i = 0; i<mission.thief.MovementLeft; i++)
                 {
-                    Queue<Point> newPath = new Queue<Point>();
-                    newPath.Enqueue(nextMove);
-                    while (path.Count > 0)
-                    {
-                        newPath.Enqueue(path.Dequeue());
-                    }
-                    path = newPath;
+                    mission.thief.move(nextMove.x, nextMove.y);
                 }
                 return false;
             }

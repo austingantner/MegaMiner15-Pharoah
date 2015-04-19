@@ -12,6 +12,7 @@ class AI : BaseAI
 {
     Player me;
     Random rand;
+    static int GuideCount = 0;
     
     public override string username()
     {
@@ -336,7 +337,6 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             List<Tile> spawnTiles = getMySpawns();
 
-            
             Tile mercTile = getTile(mySarcophagiTiles[0].X+1, mySarcophagiTiles[0].Y);
             if (mercTile.Type == 0)
             {
@@ -533,6 +533,8 @@ class AI : BaseAI
 
             int Nincount = 0;
             int BombCount = 0;
+            
+
             foreach (var thief in myThieves)
             {
                 if (thief.ThiefType == 2)
@@ -546,7 +548,12 @@ class AI : BaseAI
             }
 
             int thiefNo = 4;
-            if (Nincount < 5)
+            if (GuideCount < 2)
+            {
+                thiefNo = 3;
+                GuideCount++;
+            }
+            else if (Nincount < 4)
             {
                 thiefNo = 2;// rand.Next(thiefTypes.Length);
             }
