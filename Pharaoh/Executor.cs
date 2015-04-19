@@ -108,10 +108,17 @@ namespace Pharaoh
             }
             else if (t.TrapType == TrapType.MERCURY_PIT)
             {
-                // SACRAFICE THE SLAVES
+                // SACRAFICE THE SLAVES if another unit is on the same square
+                // idea is to proc cooldown
                 if (mission.thief.ThiefType == ThiefType.SLAVE)
                 {
-                    return false;
+                    foreach (Thief myThief in BaseAI.thieves)
+                    {
+                        if (myThief.Id != mission.thief.Id && myThief.X == mission.thief.X && myThief.Y == mission.thief.Y)
+                        {
+                            return false;
+                        }
+                    }
                 }
                 destroy(mission.thief, t);
                 return true;
@@ -131,6 +138,10 @@ namespace Pharaoh
                     }
                 }
                 destroy(mission.thief, t);
+                if (t.TurnsTillActive > 0)
+                {
+                    return false;
+                }
                 return true;
             }
             else if (t.TrapType == TrapType.FAKE_ROTATING_WALL)
