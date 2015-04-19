@@ -28,7 +28,7 @@ namespace Pharaoh
             {
                 if (t.Owner == playerID && t.ThiefType == ThiefType.SLAVE)
                 {
-                    for(int i = 0; i < 2; i++)
+                    //for(int i = 0; i < 2; i++)
                         missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
                 }
             }
@@ -36,7 +36,7 @@ namespace Pharaoh
             {
                 if (t.Owner == playerID && t.ThiefType == ThiefType.BOMBER)
                 {
-                    for (int i = 0; i < 3; i++)
+                    //for (int i = 0; i < 3; i++)
                         missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
                 }
             }
@@ -44,7 +44,7 @@ namespace Pharaoh
             {
                 if (t.Owner == playerID)
                 {
-                    for (int i = 0; i < 5; i++)
+                    //for (int i = 0; i < 5; i++)
                         missions.Add(new Mission(t, MissionType.goTo, target.EnemySarcophagi));
                 }
             }
