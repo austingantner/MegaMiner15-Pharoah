@@ -309,17 +309,18 @@ class AI : BaseAI
             List<Tile> spawnTiles = getMySpawns();
 
             Queue<Point> path = new Queue<Point>();
-                int endX = spawnTiles[0].X;
-                int endY = spawnTiles[0].Y;
-                path = findPath(new Point(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y), new Point(endX, endY));
-                        // If a path exists then move forward on the path
-                if (path.Count > 1)
-                {
-                    Point nextMove = path.Dequeue();
-                    me.placeTrap(nextMove.x, nextMove.y, 9);
-                    nextMove = path.Dequeue();
-                    me.placeTrap(nextMove.x, nextMove.y, 9);
-                }
+            int endX = spawnTiles[0].X;
+            int endY = spawnTiles[0].Y;
+            path = findPath(new Point(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y), new Point(endX, endY));
+                    // If a path exists then move forward on the path
+            //if (path.Count > 1)
+            //{
+                Point nextMove = path.Dequeue();
+                me.placeTrap(nextMove.x, nextMove.y, 9);
+                nextMove = path.Dequeue();
+                me.placeTrap(nextMove.x, nextMove.y, 9);
+            //}
+
             for (int i = 0; i < tiles.Length; i++)
             {
                 if (tiles[i].Type == 1)
