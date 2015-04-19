@@ -334,14 +334,59 @@ class AI : BaseAI
                     if (tiles[i].X == 24)
                     {
                         me.placeTrap(23, tiles[i].Y, 5);
+                        for (int j = 0; j < tiles.Length; j++)
+                        {
+                            if (tiles[j].Type == 0 && tiles[j].X == 23 && tiles[j].Y == tiles[i].Y)
+                            {
+                                me.placeTrap(23, tiles[i].Y, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].X == 24 && tiles[j].Y == tiles[i].Y + 1)
+                            {
+                                me.placeTrap(24, tiles[i].Y + 1, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].X == 24 && tiles[j].Y == tiles[i].Y - 1)
+                            {
+                                me.placeTrap(24, tiles[i].Y - 1, 11);
+                            }
+                        }
                     }
                     if (tiles[i].Y == 0)
                     {
                         me.placeTrap(tiles[i].X, 1, 5);
+                        for (int j = 0; j < tiles.Length; j++)
+                        {
+                            if (tiles[j].Type == 0 && tiles[j].Y == 2 && tiles[j].X == tiles[i].X)
+                            {
+                                me.placeTrap(tiles[i].X, 2, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].Y == 1 && tiles[j].X == tiles[i].X + 1)
+                            {
+                                me.placeTrap(tiles[i].X + 1, 1 , 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].Y == 1 && tiles[j].X == tiles[i].X - 1)
+                            {
+                                me.placeTrap(tiles[i].X - 1,1 , 11);
+                            }
+                        }
                     }
                     if (tiles[i].Y == 24)
                     {
                         me.placeTrap(tiles[i].X, 23, 5);
+                        for (int j = 0; j < tiles.Length; j++)
+                        {
+                            if (tiles[j].Type == 0 && tiles[j].Y == 23 && tiles[j].X == tiles[i].X)
+                            {
+                                me.placeTrap(tiles[i].X, 23, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].Y == 24 && tiles[j].X == tiles[i].X + 1)
+                            {
+                                me.placeTrap(tiles[i].X + 1, 24, 11);
+                            }
+                            if (tiles[j].Type == 0 && tiles[j].Y == 24 && tiles[j].X == tiles[i].X - 1)
+                            {
+                                me.placeTrap(tiles[i].X - 1, 24, 11);
+                            }
+                        }
                     }
                 }
             }
