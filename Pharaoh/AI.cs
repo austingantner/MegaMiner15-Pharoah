@@ -323,11 +323,11 @@ class AI : BaseAI
                             }
                             if (tiles[j].Type == 0 && tiles[j].X == 1 && tiles[j].Y == tiles[i].Y + 1)
                             {
-                                me.placeTrap(2, tiles[i].Y + 1, 11);
+                                me.placeTrap(1, tiles[i].Y + 1, 11);
                             }
                             if (tiles[j].Type == 0 && tiles[j].X == 1 && tiles[j].Y == tiles[i].Y - 1)
                             {
-                                me.placeTrap(2, tiles[i].Y - 1, 11);
+                                me.placeTrap(1, tiles[i].Y - 1, 11);
                             }
                         }
                     }
