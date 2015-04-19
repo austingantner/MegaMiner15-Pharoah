@@ -309,13 +309,16 @@ class AI : BaseAI
             List<Tile> spawnTiles = getMySpawns();
 
             Queue<Point> path = new Queue<Point>();
+
             Tile paTile = getTile(5,5);
-            int tileIt = 0;
+
+            int tileIt = 100;
             while (!(tiles[tileIt].Type == 0))
             {
                 tileIt++;
             }
             paTile = getTile(10, 10);
+            tileIt = 200;
             int endX = tiles[tileIt].X;
             int endY = tiles[tileIt].Y;
             while(!(tiles[tileIt].Type == 0))
