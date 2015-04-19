@@ -266,37 +266,9 @@ class AI : BaseAI
             int myScarabs = me.Scarabs;
             int sarcophagusCount = mySarcophagi.Count;
             List<Tile> mySarcophagiTiles = new List<Tile>();
-
-            List<Tile> deadEnds = new List<Tile>();
-            for (int i = 26; i < tiles.Length - 27; i++)
-            {
-                int neighbors = 0;
-                if (getTile(tiles[i].X + 1, tiles[i].Y).Type == 0)
-                {
-                    neighbors++;
-                }
-                if (getTile(tiles[i].X - 1, tiles[i].Y).Type == 0)
-                {
-                    neighbors++;
-                }
-                if (getTile(tiles[i].X, tiles[i].Y + 1).Type == 0)
-                {
-                    neighbors++;
-                }
-                if (getTile(tiles[i].X, tiles[i].Y - 1).Type == 0)
-                {
-                    neighbors++;
-                }
-                if (neighbors == 1)
-                {
-                    deadEnds.Add(tiles[i]);
-                }
-            }
-
-            
             // Find the first open tiles and place the sarcophagi there
             int placed = 0;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < tiles.Length; i++)
             {
                 int tileBase = 0;
                     if (placed == 0)
@@ -314,7 +286,7 @@ class AI : BaseAI
                     Tile tile;
                     //if (placed < 2)
                     //{
-                    tile = deadEnds[i];
+                    tile = tiles[tileBase + i];
                 //Tile tile = tiles[i];
 
                 // If the tile is on my side and is empty
@@ -337,7 +309,17 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             List<Tile> spawnTiles = getMySpawns();
 
-            
+            Queue<Point> path = new Queue<Point>();
+            int endX = mySarcophagiTiles[0].X;
+            int endY = mySarcophagiTiles[0].Y;
+            path = findPath(new Point(spawnTiles[0].X, spawnTiles[0].Y), new Point(endX, endY));
+            // If a path exists then move forward on the path
+            while (path.Count > 0)
+            {
+                Point nextMove = path.Dequeue();
+                me.placeTrap(nextMove.x, nextMove.y, 1);
+            }
+
             Tile mercTile = getTile(mySarcophagiTiles[0].X+1, mySarcophagiTiles[0].Y);
             if (mercTile.Type == 0)
             {
@@ -549,7 +531,7 @@ class AI : BaseAI
             }
 
             int thiefNo = 4;
-            if (GuideCount < 4)
+            if (GuideCount < 2)
             {
                 thiefNo = 3;
                 GuideCount++;
