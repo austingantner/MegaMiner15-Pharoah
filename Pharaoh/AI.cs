@@ -308,18 +308,7 @@ class AI : BaseAI
             // Continue spawning traps until there isn't enough money to spend
             List<Tile> spawnTiles = getMySpawns();
 
-            Queue<Point> path = new Queue<Point>();
-            int endX = spawnTiles[0].X;
-            int endY = spawnTiles[0].Y;
-            path = findPath(new Point(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y), new Point(endX, endY));
-                    // If a path exists then move forward on the path
-            //if (path.Count > 1)
-            //{
-                Point nextMove = path.Dequeue();
-                me.placeTrap(nextMove.x, nextMove.y, 9);
-                nextMove = path.Dequeue();
-                me.placeTrap(nextMove.x, nextMove.y, 9);
-            //}
+            
 
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -327,6 +316,20 @@ class AI : BaseAI
                 {
                     if (tiles[i].X == 0)
                     {
+
+                        Queue<Point> path = new Queue<Point>();
+                        int endX = 1;
+                        int endY = tiles[0].Y;
+                        path = findPath(new Point(mySarcophagiTiles[0].X, mySarcophagiTiles[0].Y), new Point(endX, endY));
+                        // If a path exists then move forward on the path
+                        //if (path.Count > 1)
+                        //{
+                        Point nextMove = path.Dequeue();
+                        me.placeTrap(nextMove.x, nextMove.y, 9);
+                        nextMove = path.Dequeue();
+                        me.placeTrap(nextMove.x, nextMove.y, 9);
+                        //}
+
                         me.placeTrap(1, tiles[i].Y, 5);
                         for (int j = 0; j < tiles.Length; j++)
                         {
